@@ -4,6 +4,7 @@ import sys
 import webbrowser
 import os
 import time
+import glob
 
 # GLOBALS:
 TEMPLATENAME = 'html_template.htm'
@@ -16,15 +17,43 @@ def init():
             files.append(sys.argv[1])
             files.append(sys.argv[2])
         except:
-            print('\nWe encountered an error while processing: ' + outFileName)
+            print('\nWe encountered an error while processing: ')
             e = sys.exc_info()[0]
             print('The error message reads: ', e, '\n')
             input('<ok> - EXIT')
             sys.exit(-999)
     else:
-        input('please drag and drop 2 files to compare! EXIT')
-        sys.exit()
+        files = 0
+        while not files:
+            files = fileDialog()
     return files
+
+def fileDialog():
+    print()
+    files = glob.glob('*.*')
+    self = sys.argv[0].split('/')[-1]
+    self = os.path.basename(__file__)
+    exclude = [self, OUTFILENAME, TEMPLATENAME]
+    files.sort(key=lambda f: os.path.splitext(f)[1])
+    for excludeFile in exclude:
+        files.remove(excludeFile)
+    for index, file in enumerate(files):
+        print(index, file)
+
+    first = input('\nfirst file number?')
+    second = input('second file number?')
+    try:
+        first = int(first)
+        second = int(second)
+    except:
+        return 0
+    if not first == second and first < len(files) and second < len(files):
+        first = files[first]
+        second =files[second]
+        return [first, second]
+    else:
+        return 0
+    return
 
 def readFiles(files):
     content = []
@@ -52,10 +81,10 @@ def compare(data1, data2):
         chunkCount += 1
     return diffList
 
-def generateHTMLdiff(diffList, data1, data2):
+def generateHTMLdiff(diffList, data1, data2, firstFile):
     diffHTML = []
     strTemp = ''
-    strTemp += '<p>'+str(sys.argv[1])+' - is displayed on top</p><br>'
+    strTemp += '<p>'+str(firstFile)+' - is displayed on top</p><br>'
     diffHTML.append(strTemp)
     strTemp = ''
     i = iter(diffList)
@@ -143,7 +172,7 @@ def main():
     data1 = chunker(content[0], 16)
     data2 = chunker(content[1], 16)
     diffList = compare(data1, data2)
-    diffHTML = generateHTMLdiff(diffList, data1, data2)
+    diffHTML = generateHTMLdiff(diffList, data1, data2, files[0])
     injectHTML(diffHTML)
     try:
         print('opening webbrowser')
