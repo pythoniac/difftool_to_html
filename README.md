@@ -15,5 +15,5 @@ Finally, adjust the global names within the script if you want to (self explanat
 
 
 
-TEMPLATENAME = html_template.htm
+TEMPLATENAME = html_template.htm<br>
 OUTFILENAME = result.htm
