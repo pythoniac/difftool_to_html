@@ -12,5 +12,5 @@ The output format of the html can be adjusted in the 'html_template.htm' file. S
 <style> section of the document. <p> is the format for normal text; <d> formats the diff value highlights.
 
 Finally, adjust the global names within the script if you want to (self explanatory, I think):
-TEMPLATENAME = 'html_template.htm'
-OUTFILENAME = 'result.htm'
+TEMPLATENAME = html_template.htm
+OUTFILENAME = result.htm
