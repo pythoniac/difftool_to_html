@@ -9,9 +9,11 @@ You can also start the script from the command line and give the two files as ar
 The script has been designed to work with binary files but will compare any file format.
 
 The output format of the html can be adjusted in the 'html_template.htm' file. Simply adjust the
-<style> section of the document. <p> is the format for normal text; <d> formats the diff value highlights.
+'style' section of the document. p-Tag is the format for normal text; d-Tag formats the diff value highlights.
 
 Finally, adjust the global names within the script if you want to (self explanatory, I think):
+
+
 
 TEMPLATENAME = html_template.htm
 OUTFILENAME = result.htm
